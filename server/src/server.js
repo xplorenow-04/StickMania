@@ -14,7 +14,7 @@ const httpServer = createServer(app);
 // 1. CORS (registered first so preflight and errors get CORS headers)
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    origin: process.env.CLIENT_URL || "https://stickmania.onrender.com",
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     credentials: true,
   })
