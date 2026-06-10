@@ -27,9 +27,6 @@ app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(express.static("public"));
 
 // Security middleware
-app.use(helmet({
-  crossOriginResourcePolicy: { policy: "cross-origin" },
-}));
 
 // Custom NoSQL Injection Sanitization (Express 5 compatible)
 const cleanMongoKeys = (obj) => {
