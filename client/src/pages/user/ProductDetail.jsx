@@ -5,10 +5,10 @@ import Footer from "../../components/user/Footer.jsx";
 import StickerCard from "../../components/user/StickerCard.jsx";
 import SkeletonCard from "../../components/user/SkeletonCard.jsx";
 import { productApi } from "../../api/product.api.js";
-import { MessageSquare, ArrowLeft, Heart, Tag, Sparkles } from "lucide-react";
+import { MessageSquare, ArrowLeft, Tag, Sparkles } from "lucide-react";
 import toast from "react-hot-toast";
 
-const WHATSAPP_NO = import.meta.env.WHATSAPP_NO || "8806720312" // Hardcoded matching seed config
+const WHATSAPP_NO = import.meta.env.WHATSAPP_NO || "8806720312"
 
 export default function ProductDetail() {
   const { slug } = useParams();
@@ -25,12 +25,10 @@ export default function ProductDetail() {
         const res = await productApi.getBySlug(slug);
         if (res.success && res.data) {
           setProduct(res.data);
-          // Set first image as active
           if (res.data.images && res.data.images.length > 0) {
             setActiveImage(res.data.images[0].url);
           }
 
-          // Fetch related products in the same category
           setLoadingRelated(true);
           const catId = res.data.category?._id || res.data.category;
           if (catId) {
@@ -39,7 +37,6 @@ export default function ProductDetail() {
               limit: 4,
             });
             if (relRes.success && relRes.data) {
-              // Exclude current product
               const filtered = (relRes.data.products || []).filter((p) => p._id !== res.data._id);
               setRelatedProducts(filtered.slice(0, 4));
             }
@@ -60,7 +57,7 @@ export default function ProductDetail() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-dark-950 flex flex-col">
+      <div className="min-h-screen bg-white flex flex-col">
         <Navbar />
         <div className="flex-grow section-container py-12 flex flex-col md:flex-row gap-8 items-center justify-center">
           <div className="w-full md:w-1/2 aspect-square rounded-2xl skeleton" />
@@ -79,11 +76,11 @@ export default function ProductDetail() {
 
   if (!product) {
     return (
-      <div className="min-h-screen bg-dark-950 flex flex-col">
+      <div className="min-h-screen bg-white flex flex-col">
         <Navbar />
         <div className="flex-grow flex flex-col items-center justify-center text-center py-20 px-4">
-          <h2 className="text-2xl font-black text-white mb-2">Product Not Found</h2>
-          <p className="text-gray-400 text-sm mb-6">The sticker you are looking for does not exist or has been removed.</p>
+          <h2 className="text-2xl font-black text-gray-900 mb-2">Product Not Found</h2>
+          <p className="text-gray-500 text-sm mb-6">The sticker you are looking for does not exist or has been removed.</p>
           <Link to="/shop" className="btn-brand text-xs font-bold px-6 py-2.5">
             Back to Shop
           </Link>
@@ -96,7 +93,6 @@ export default function ProductDetail() {
   const { name, price, discount, images, description, category, tags, featured, bestseller, trending } = product;
   const finalPrice = discount > 0 ? (price - (price * discount) / 100).toFixed(2) : price.toFixed(2);
 
-  // Construct WhatsApp order link
   const currentUrl = window.location.href;
   const whatsappText = encodeURIComponent(
     `Hi StickMania! I'd like to order the sticker "${name}".\n\nLink: ${currentUrl}\nPrice: ₹${finalPrice}`
@@ -104,12 +100,12 @@ export default function ProductDetail() {
   const whatsappLink = `https://wa.me/${WHATSAPP_NO}?text=${whatsappText}`;
 
   return (
-    <div className="min-h-screen bg-dark-950 flex flex-col">
+    <div className="min-h-screen bg-white flex flex-col">
       <Navbar />
 
       <main className="flex-1 section-container py-10">
         {/* Back Link */}
-        <Link to="/shop" className="inline-flex items-center gap-2 text-xs font-semibold text-gray-400 hover:text-white mb-8 transition">
+        <Link to="/shop" className="inline-flex items-center gap-2 text-xs font-semibold text-gray-500 hover:text-gray-900 mb-8 transition-all duration-150">
           <ArrowLeft size={14} /> Back to Shop
         </Link>
 
@@ -119,7 +115,7 @@ export default function ProductDetail() {
           {/* Images Gallery */}
           <div className="space-y-4">
             {/* Active image box */}
-            <div className="w-full aspect-square rounded-2xl glass border border-white/5 bg-dark-900/50 flex items-center justify-center p-6 overflow-hidden">
+            <div className="w-full aspect-square rounded-xl bg-white border border-gray-200 shadow-sm flex items-center justify-center p-6 overflow-hidden">
               <img
                 src={activeImage || "https://via.placeholder.com/600?text=StickMania"}
                 alt={name}
@@ -134,8 +130,9 @@ export default function ProductDetail() {
                   <button
                     key={index}
                     onClick={() => setActiveImage(img.url)}
-                    className={`relative w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 border bg-dark-900/40 p-1.5 transition ${activeImage === img.url ? "border-purple-500 ring-2 ring-purple-500/20" : "border-white/10 hover:border-white/20"
-                      }`}
+                    className={`relative w-20 h-20 rounded-lg overflow-hidden flex-shrink-0 border bg-white p-1.5 transition-all duration-150 shadow-sm ${
+                      activeImage === img.url ? "border-brand-500 ring-2 ring-brand-500/20" : "border-gray-200 hover:border-gray-300"
+                    }`}
                   >
                     <img src={img.url} alt={`Thumbnail ${index}`} className="w-full h-full object-contain" />
                   </button>
@@ -149,34 +146,34 @@ export default function ProductDetail() {
 
             {/* Badges & Category */}
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-xs font-semibold text-purple-400 uppercase tracking-widest bg-purple-500/10 border border-purple-500/20 px-2.5 py-1 rounded-lg">
+              <span className="text-xs font-semibold text-brand-700 uppercase tracking-widest bg-brand-50 border border-brand-200 px-2.5 py-1 rounded-lg">
                 {category?.name || "Sticker"}
               </span>
 
               {bestseller && (
-                <span className="inline-flex items-center gap-1 text-[10px] font-bold text-amber-300 uppercase tracking-wider bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded-md">
+                <span className="inline-flex items-center gap-1 text-[10px] font-bold text-pink-700 uppercase tracking-wider bg-pink-50 border border-pink-200 px-2 py-0.5 rounded-md">
                   <Sparkles size={10} /> Bestseller
                 </span>
               )}
               {trending && (
-                <span className="inline-flex items-center gap-1 text-[10px] font-bold text-blue-300 uppercase tracking-wider bg-blue-500/10 border border-blue-500/20 px-2 py-0.5 rounded-md">
+                <span className="inline-flex items-center gap-1 text-[10px] font-bold text-brand-700 uppercase tracking-wider bg-brand-50 border border-brand-200 px-2 py-0.5 rounded-md">
                   Trending
                 </span>
               )}
             </div>
 
             {/* Product Title */}
-            <h1 className="text-3xl sm:text-4xl font-black text-white font-display tracking-tight leading-tight">
+            <h1 className="text-3xl sm:text-4xl font-black text-gray-900 tracking-tight leading-tight" style={{ letterSpacing: "-0.02em" }}>
               {name}
             </h1>
 
             {/* Price section */}
-            <div className="py-4 border-y border-white/5 flex items-baseline gap-3">
-              <span className="text-3xl font-black text-white">₹{finalPrice}</span>
+            <div className="py-4 border-y border-gray-200 flex items-baseline gap-3">
+              <span className="text-3xl font-black text-gray-900">₹{finalPrice}</span>
               {discount > 0 && (
                 <>
-                  <span className="text-sm text-gray-500 line-through">₹{price.toFixed(2)}</span>
-                  <span className="text-xs font-bold text-pink-400 bg-pink-500/10 border border-pink-500/20 px-2 py-0.5 rounded-md">
+                  <span className="text-sm text-gray-400 line-through">₹{price.toFixed(2)}</span>
+                  <span className="text-xs font-bold text-red-600 bg-red-50 border border-red-200 px-2 py-0.5 rounded-md">
                     {discount}% OFF
                   </span>
                 </>
@@ -185,19 +182,19 @@ export default function ProductDetail() {
 
             {/* Description */}
             <div className="space-y-2">
-              <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider">Description</h3>
-              <p className="text-gray-300 text-sm leading-relaxed whitespace-pre-wrap">{description}</p>
+              <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider">Description</h3>
+              <p className="text-gray-700 text-sm leading-relaxed whitespace-pre-wrap">{description}</p>
             </div>
 
             {/* Tags */}
             {tags && tags.length > 0 && (
               <div className="space-y-2">
-                <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider flex items-center gap-1.5">
+                <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider flex items-center gap-1.5">
                   <Tag size={12} /> Tags
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {tags.map((tag) => (
-                    <span key={tag} className="text-xs px-2.5 py-1 rounded-lg bg-dark-900 border border-white/5 text-gray-400">
+                    <span key={tag} className="text-xs px-2.5 py-1 rounded-lg bg-gray-50 border border-gray-200 text-gray-600">
                       {tag}
                     </span>
                   ))}
@@ -213,23 +210,23 @@ export default function ProductDetail() {
                 rel="noopener noreferrer"
                 className="btn-brand flex items-center justify-center gap-2 text-sm font-bold flex-grow sm:flex-grow-0"
               >
-                <MessageSquare size={18} className="fill-current" />
+                <MessageSquare size={18} />
                 Order via WhatsApp
               </a>
             </div>
 
             {/* Quality badge list */}
-            <div className="pt-6 grid grid-cols-3 gap-4 text-center border-t border-white/5">
-              <div className="p-3 bg-white/3 rounded-xl border border-white/5">
-                <span className="block text-xs font-bold text-purple-400">Vinyl</span>
+            <div className="pt-6 grid grid-cols-3 gap-4 text-center border-t border-gray-200">
+              <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
+                <span className="block text-xs font-bold text-brand-600">Vinyl</span>
                 <span className="text-[10px] text-gray-500 mt-0.5 block">Premium material</span>
               </div>
-              <div className="p-3 bg-white/3 rounded-xl border border-white/5">
-                <span className="block text-xs font-bold text-purple-400">Weatherproof</span>
+              <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
+                <span className="block text-xs font-bold text-brand-600">Weatherproof</span>
                 <span className="text-[10px] text-gray-500 mt-0.5 block">Sun & water safe</span>
               </div>
-              <div className="p-3 bg-white/3 rounded-xl border border-white/5">
-                <span className="block text-xs font-bold text-purple-400">Scratchproof</span>
+              <div className="p-3 bg-gray-50 rounded-lg border border-gray-200">
+                <span className="block text-xs font-bold text-brand-600">Scratchproof</span>
                 <span className="text-[10px] text-gray-500 mt-0.5 block">Matte/Gloss finish</span>
               </div>
             </div>
@@ -238,8 +235,8 @@ export default function ProductDetail() {
         </div>
 
         {/* Related Products Section */}
-        <div className="mt-24 border-t border-white/5 pt-16">
-          <h2 className="text-2xl font-black text-white font-display mb-8">Related Stickers</h2>
+        <div className="mt-24 border-t border-gray-200 pt-16">
+          <h2 className="text-2xl font-black text-gray-900 tracking-tight mb-8" style={{ letterSpacing: "-0.02em" }}>Related Stickers</h2>
 
           {loadingRelated ? (
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -248,7 +245,7 @@ export default function ProductDetail() {
               ))}
             </div>
           ) : relatedProducts.length === 0 ? (
-            <p className="text-sm text-gray-500">No other stickers in this category yet.</p>
+            <p className="text-sm text-gray-400">No other stickers in this category yet.</p>
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {relatedProducts.map((p) => (

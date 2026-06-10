@@ -17,7 +17,7 @@ export default function SearchBar({ value, onChange, onClear, placeholder = "Sea
       {value && onClear && (
         <button
           onClick={onClear}
-          className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-gray-400 hover:text-white transition-colors"
+          className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-gray-400 hover:text-gray-700 transition-all duration-150"
         >
           <X size={16} />
         </button>

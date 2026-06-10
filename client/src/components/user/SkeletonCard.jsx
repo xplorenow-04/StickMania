@@ -2,9 +2,9 @@ import React from "react";
 
 export default function SkeletonCard() {
   return (
-    <div className="flex flex-col rounded-2xl glass border border-white/[0.06] overflow-hidden p-4 space-y-4">
+    <div className="flex flex-col rounded-xl bg-white border border-gray-200 shadow-sm overflow-hidden p-4 space-y-4">
       {/* Image Skeleton */}
-      <div className="aspect-square w-full rounded-xl skeleton" />
+      <div className="aspect-square w-full rounded-lg skeleton" />
 
       {/* Info Skeleton */}
       <div className="space-y-2.5">

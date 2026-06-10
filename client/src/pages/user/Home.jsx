@@ -49,23 +49,46 @@ export default function Home() {
   }, [setCategories]);
 
   return (
-    <div className="min-h-screen bg-dark-950 flex flex-col">
-      <Navbar />
+    <div className="min-h-screen bg-white flex flex-col">
+      <Navbar variant="hero" />
 
       {/* Hero Section */}
       <HeroSection />
 
+      {/* Product Showcase — Second Image */}
+      <section className="py-24 sm:py-32 section-container">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-black text-gray-900 tracking-tight" style={{ letterSpacing: "-0.02em" }}>
+            See Our Stickers in Action
+          </h2>
+          <p className="text-sm text-gray-500 mt-3 max-w-lg mx-auto">
+            Premium vinyl prints that bring personality to everything you own.
+          </p>
+        </div>
+        <div
+          className="max-w-5xl mx-auto rounded-2xl overflow-hidden shadow-[0_24px_64px_rgba(0,0,0,0.12)] transition-all duration-300 hover:shadow-[0_32px_80px_rgba(0,0,0,0.16)]"
+          style={{ transform: "perspective(1200px) rotateX(4deg)" }}
+        >
+          <img
+            src="/appImages/temp 2.png"
+            alt="StickMania sticker collection — vibrant designs for every style"
+            className="w-full h-auto object-cover"
+            loading="lazy"
+          />
+        </div>
+      </section>
+
       {/* Categories Grid Section */}
       <section id="categories" className="py-16 section-container">
         <div className="flex flex-col items-center text-center mb-12">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20 text-xs font-semibold uppercase tracking-wider mb-3">
-            <Compass size={14} className="text-purple-400" />
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-50 text-brand-700 border border-brand-200 text-xs font-semibold uppercase tracking-wider mb-3">
+            <Compass size={14} className="text-brand-500" />
             Categories
           </div>
-          <h2 className="text-3xl font-black text-white font-display">
+          <h2 className="text-3xl font-black text-gray-900 tracking-tight" style={{ letterSpacing: "-0.02em" }}>
             Browse by Theme
           </h2>
-          <p className="text-sm text-gray-400 mt-2 max-w-md">
+          <p className="text-sm text-gray-500 mt-2 max-w-md">
             Find the perfect look for your gear. Explore our collections.
           </p>
         </div>
@@ -73,11 +96,11 @@ export default function Home() {
         {loadingCats ? (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[...Array(4)].map((_, i) => (
-              <div key={i} className="h-60 rounded-2xl skeleton" />
+              <div key={i} className="h-60 rounded-xl skeleton" />
             ))}
           </div>
         ) : categories.length === 0 ? (
-          <div className="text-center py-10 text-gray-500">
+          <div className="text-center py-10 text-gray-400">
             No categories available yet.
           </div>
         ) : (
@@ -90,22 +113,22 @@ export default function Home() {
       </section>
 
       {/* Trending Stickers Section */}
-      <section className="py-16 bg-white/[0.01] border-y border-white/[0.04]">
+      <section className="py-16 bg-gray-50 border-y border-gray-200">
         <div className="section-container">
           <div className="flex items-end justify-between mb-10">
             <div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/10 text-blue-300 border border-blue-500/20 text-xs font-semibold uppercase tracking-wider mb-3">
-                <Flame size={14} className="text-blue-400" />
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-50 text-brand-700 border border-brand-200 text-xs font-semibold uppercase tracking-wider mb-3">
+                <Flame size={14} className="text-brand-500" />
                 Trending
               </div>
-              <h2 className="text-3xl font-black text-white font-display">
+              <h2 className="text-3xl font-black text-gray-900 tracking-tight" style={{ letterSpacing: "-0.02em" }}>
                 Top Trending Stickers
               </h2>
             </div>
           </div>
 
           {trendingProducts.length === 0 ? (
-            <div className="text-center py-12 text-gray-500">
+            <div className="text-center py-12 text-gray-400">
               No trending stickers at the moment.
             </div>
           ) : (
@@ -122,18 +145,18 @@ export default function Home() {
       <section className="py-16 section-container">
         <div className="flex items-end justify-between mb-10">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/20 text-xs font-semibold uppercase tracking-wider mb-3">
-              <Sparkles size={14} className="text-amber-400" />
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-200 text-xs font-semibold uppercase tracking-wider mb-3">
+              <Sparkles size={14} className="text-amber-500" />
               Featured
             </div>
-            <h2 className="text-3xl font-black text-white font-display">
+            <h2 className="text-3xl font-black text-gray-900 tracking-tight" style={{ letterSpacing: "-0.02em" }}>
               Featured Picks
             </h2>
           </div>
         </div>
 
         {featuredProducts.length === 0 ? (
-          <div className="text-center py-12 text-gray-500">
+          <div className="text-center py-12 text-gray-400">
             No featured stickers available.
           </div>
         ) : (

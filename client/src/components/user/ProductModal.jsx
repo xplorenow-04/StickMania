@@ -17,11 +17,9 @@ export default function ProductModal({ isOpen, onClose, productToEdit, onProduct
   const [bestseller, setBestseller] = useState(false);
   const [trending, setTrending] = useState(false);
 
-  // New local files to upload
   const [newImageFiles, setNewImageFiles] = useState([]);
   const [newImagePreviews, setNewImagePreviews] = useState([]);
 
-  // Existing images (if editing)
   const [existingImages, setExistingImages] = useState([]);
   const [removedImageIds, setRemovedImageIds] = useState([]);
 
@@ -29,7 +27,6 @@ export default function ProductModal({ isOpen, onClose, productToEdit, onProduct
 
   const { categories, setCategories } = useCategoryStore();
 
-  // Fetch categories if not loaded
   useEffect(() => {
     const fetchCats = async () => {
       if (categories.length === 0) {
@@ -44,7 +41,6 @@ export default function ProductModal({ isOpen, onClose, productToEdit, onProduct
     }
   }, [isOpen, categories.length, setCategories]);
 
-  // Load product details when editing
   useEffect(() => {
     if (productToEdit) {
       setName(productToEdit.name || "");
@@ -98,7 +94,6 @@ export default function ProductModal({ isOpen, onClose, productToEdit, onProduct
     setNewImageFiles(files);
 
     const previews = [...newImagePreviews];
-    // Free up URL reference
     URL.revokeObjectURL(previews[index]);
     previews.splice(index, 1);
     setNewImagePreviews(previews);
@@ -138,14 +133,12 @@ export default function ProductModal({ isOpen, onClose, productToEdit, onProduct
     formData.append("bestseller", bestseller);
     formData.append("trending", trending);
 
-    // Append files
     newImageFiles.forEach((file) => {
       formData.append("images", file);
     });
 
     try {
       if (productToEdit) {
-        // Edit mode
         if (removedImageIds.length > 0) {
           formData.append("removeImages", JSON.stringify(removedImageIds));
         }
@@ -159,7 +152,6 @@ export default function ProductModal({ isOpen, onClose, productToEdit, onProduct
           toast.error(res.message || "Failed to update product");
         }
       } else {
-        // Create mode
         const res = await productApi.create(formData);
         if (res.success && res.data) {
           toast.success("Product created successfully");
@@ -177,26 +169,26 @@ export default function ProductModal({ isOpen, onClose, productToEdit, onProduct
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-dark-950/80 backdrop-blur-sm overflow-y-auto">
-      <div className="relative w-full max-w-2xl rounded-2xl glass border border-white/10 bg-dark-900 overflow-hidden shadow-2xl my-8 animate-in fade-in zoom-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/20 backdrop-blur-sm overflow-y-auto">
+      <div className="relative w-full max-w-2xl rounded-xl bg-white border border-gray-200 overflow-hidden shadow-modal my-8 animate-scale-in">
         
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-white/5">
-          <h2 className="text-lg font-bold text-white font-display">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
+          <h2 className="text-lg font-bold text-gray-900">
             {productToEdit ? "Edit Sticker" : "Add New Sticker"}
           </h2>
-          <button onClick={onClose} className="text-gray-400 hover:text-white transition">
+          <button onClick={onClose} className="text-gray-400 hover:text-gray-700 transition-all duration-150">
             <X size={20} />
           </button>
         </div>
 
         {/* Scrollable Form */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-6 max-h-[80vh] overflow-y-auto custom-scroll">
+        <form onSubmit={handleSubmit} className="p-6 space-y-6 max-h-[80vh] overflow-y-auto">
           
           {/* Main Info */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-gray-400 uppercase tracking-wide">Sticker Name</label>
+              <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Sticker Name</label>
               <input
                 type="text"
                 value={name}
@@ -208,11 +200,11 @@ export default function ProductModal({ isOpen, onClose, productToEdit, onProduct
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-gray-400 uppercase tracking-wide">Category</label>
+              <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Category</label>
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="input-field bg-dark-900 border-white/8 cursor-pointer"
+                className="input-field bg-white cursor-pointer"
                 required
               >
                 <option value="">Select Category</option>
@@ -227,7 +219,7 @@ export default function ProductModal({ isOpen, onClose, productToEdit, onProduct
 
           {/* Description */}
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-gray-400 uppercase tracking-wide">Description</label>
+            <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Description</label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
@@ -240,7 +232,7 @@ export default function ProductModal({ isOpen, onClose, productToEdit, onProduct
           {/* Pricing & Tags */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-gray-400 uppercase tracking-wide">Base Price (₹)</label>
+              <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Base Price (₹)</label>
               <input
                 type="number"
                 step="0.01"
@@ -254,7 +246,7 @@ export default function ProductModal({ isOpen, onClose, productToEdit, onProduct
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-gray-400 uppercase tracking-wide">Discount (%)</label>
+              <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Discount (%)</label>
               <input
                 type="number"
                 min="0"
@@ -267,7 +259,7 @@ export default function ProductModal({ isOpen, onClose, productToEdit, onProduct
             </div>
 
             <div className="space-y-1.5 col-span-1 md:col-span-1">
-              <label className="text-xs font-semibold text-gray-400 uppercase tracking-wide">Tags (comma-separated)</label>
+              <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Tags (comma-separated)</label>
               <input
                 type="text"
                 value={tagsInput}
@@ -279,33 +271,33 @@ export default function ProductModal({ isOpen, onClose, productToEdit, onProduct
           </div>
 
           {/* Badges Checklist */}
-          <div className="flex flex-wrap gap-6 py-2 px-4 rounded-xl bg-white/3 border border-white/5">
-            <label className="flex items-center gap-2 cursor-pointer text-sm text-gray-300 font-medium">
+          <div className="flex flex-wrap gap-6 py-2 px-4 rounded-lg bg-gray-50 border border-gray-200">
+            <label className="flex items-center gap-2 cursor-pointer text-sm text-gray-700 font-medium">
               <input
                 type="checkbox"
                 checked={featured}
                 onChange={(e) => setFeatured(e.target.checked)}
-                className="w-4 h-4 rounded text-purple-600 focus:ring-purple-500 bg-dark-900 border-white/10"
+                className="w-4 h-4 rounded text-brand-600 focus:ring-brand-500 bg-white border-gray-300"
               />
               Featured Product
             </label>
 
-            <label className="flex items-center gap-2 cursor-pointer text-sm text-gray-300 font-medium">
+            <label className="flex items-center gap-2 cursor-pointer text-sm text-gray-700 font-medium">
               <input
                 type="checkbox"
                 checked={bestseller}
                 onChange={(e) => setBestseller(e.target.checked)}
-                className="w-4 h-4 rounded text-purple-600 focus:ring-purple-500 bg-dark-900 border-white/10"
+                className="w-4 h-4 rounded text-brand-600 focus:ring-brand-500 bg-white border-gray-300"
               />
               Bestseller
             </label>
 
-            <label className="flex items-center gap-2 cursor-pointer text-sm text-gray-300 font-medium">
+            <label className="flex items-center gap-2 cursor-pointer text-sm text-gray-700 font-medium">
               <input
                 type="checkbox"
                 checked={trending}
                 onChange={(e) => setTrending(e.target.checked)}
-                className="w-4 h-4 rounded text-purple-600 focus:ring-purple-500 bg-dark-900 border-white/10"
+                className="w-4 h-4 rounded text-brand-600 focus:ring-brand-500 bg-white border-gray-300"
               />
               Trending Product
             </label>
@@ -313,22 +305,21 @@ export default function ProductModal({ isOpen, onClose, productToEdit, onProduct
 
           {/* Image Upload Area */}
           <div className="space-y-3">
-            <label className="text-xs font-semibold text-gray-400 uppercase tracking-wide">
+            <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
               Product Images (Max 5)
             </label>
 
-            {/* Existing images list */}
             {existingImages.length > 0 && (
               <div className="space-y-1.5">
-                <span className="text-[11px] text-gray-500 font-bold">Existing Images:</span>
+                <span className="text-[11px] text-gray-400 font-bold">Existing Images:</span>
                 <div className="flex flex-wrap gap-3">
                   {existingImages.map((img) => {
                     const isRemoved = removedImageIds.includes(img.publicId);
                     return (
                       <div
                         key={img.publicId}
-                        className={`relative w-20 h-20 rounded-lg overflow-hidden border border-white/10 bg-dark-950/40 transition ${
-                          isRemoved ? "opacity-30 border-red-500/50" : ""
+                        className={`relative w-20 h-20 rounded-lg overflow-hidden border border-gray-200 bg-gray-50 transition-all duration-150 ${
+                          isRemoved ? "opacity-30 border-red-400" : ""
                         }`}
                       >
                         <img src={img.url} alt="Existing" className="w-full h-full object-contain p-1" />
@@ -336,7 +327,7 @@ export default function ProductModal({ isOpen, onClose, productToEdit, onProduct
                           <button
                             type="button"
                             onClick={() => restoreExistingImage(img.publicId)}
-                            className="absolute inset-0 bg-dark-950/80 text-[10px] text-purple-400 font-semibold flex items-center justify-center hover:text-white"
+                            className="absolute inset-0 bg-black/60 text-[10px] text-white font-semibold flex items-center justify-center hover:text-brand-300"
                           >
                             Restore
                           </button>
@@ -344,7 +335,7 @@ export default function ProductModal({ isOpen, onClose, productToEdit, onProduct
                           <button
                             type="button"
                             onClick={() => markExistingImageRemoved(img.publicId)}
-                            className="absolute top-1 right-1 p-1 rounded-full bg-red-600/80 text-white hover:bg-red-600 transition"
+                            className="absolute top-1 right-1 p-1 rounded-full bg-red-500/80 text-white hover:bg-red-600 transition-all duration-150"
                           >
                             <Trash2 size={12} />
                           </button>
@@ -356,15 +347,14 @@ export default function ProductModal({ isOpen, onClose, productToEdit, onProduct
               </div>
             )}
 
-            {/* New Images upload area & previews */}
             <div className="flex flex-wrap gap-3">
               {newImagePreviews.map((url, idx) => (
-                <div key={idx} className="relative w-20 h-20 rounded-lg overflow-hidden border border-white/10 bg-dark-950/40">
+                <div key={idx} className="relative w-20 h-20 rounded-lg overflow-hidden border border-gray-200 bg-gray-50">
                   <img src={url} alt="New Preview" className="w-full h-full object-contain p-1" />
                   <button
                     type="button"
                     onClick={() => removeNewImage(idx)}
-                    className="absolute top-1 right-1 p-1 rounded-full bg-red-600/80 text-white hover:bg-red-600 transition"
+                    className="absolute top-1 right-1 p-1 rounded-full bg-red-500/80 text-white hover:bg-red-600 transition-all duration-150"
                   >
                     <Trash2 size={12} />
                   </button>
@@ -372,7 +362,7 @@ export default function ProductModal({ isOpen, onClose, productToEdit, onProduct
               ))}
 
               {existingImages.length - removedImageIds.length + newImageFiles.length < 5 && (
-                <div className="relative w-20 h-20 rounded-lg border-2 border-dashed border-white/10 bg-dark-950/20 hover:border-purple-500/50 transition cursor-pointer flex flex-col items-center justify-center text-center">
+                <div className="relative w-20 h-20 rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:border-brand-400 transition-all duration-150 cursor-pointer flex flex-col items-center justify-center text-center">
                   <input
                     type="file"
                     multiple
@@ -388,11 +378,11 @@ export default function ProductModal({ isOpen, onClose, productToEdit, onProduct
           </div>
 
           {/* Action buttons */}
-          <div className="flex justify-end gap-3 pt-4 border-t border-white/5">
+          <div className="flex justify-end gap-3 pt-4 border-t border-gray-200">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2.5 rounded-xl border border-white/10 text-xs font-semibold text-gray-300 hover:bg-white/5 transition"
+              className="btn-secondary text-xs font-semibold px-4 py-2.5"
               disabled={submitting}
             >
               Cancel

@@ -10,14 +10,14 @@ function Settings({
     
 
   return (
-       <div className="slide-in-panel flex flex-col h-full">
+       <div className="flex flex-col h-full bg-white">
                             <div className="flex items-center justify-between px-5 pt-6 pb-4">
-                                <span className="text-[15px] font-bold tracking-tight">Settings</span>
-                                <button onClick={() => setActivePanel(null)} className="text-[#4a4e6a] hover:text-[#818cf8] transition-colors">
+                                <span className="text-[15px] font-bold tracking-tight text-gray-900">Settings</span>
+                                <button onClick={() => setActivePanel(null)} className="text-gray-400 hover:text-brand-600 transition-colors">
                                     <X size={16} />
                                 </button>
                             </div>
-                            <div className="panel-divider" />
+                            <div className="h-px bg-gray-200" />
                             <div className="px-3 flex flex-col gap-0.5">
                                 {[
                                     { label: 'Notifications', icon: Bell },
@@ -25,10 +25,10 @@ function Settings({
                                     { label: 'Appearance', icon: Zap },
                                     { label: 'Blocked Users', icon: X },
                                 ].map(({ label, icon: Icon }) => (
-                                    <div key={label} className="action-row">
-                                        <Icon size={15} color="#6366f1" />
+                                    <div key={label} className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg cursor-pointer text-sm font-medium text-gray-700 hover:bg-gray-50 transition-all duration-150">
+                                        <Icon size={15} color="#2563EB" />
                                         <span>{label}</span>
-                                        <ChevronRight size={13} color="#4a4e6a" className="ml-auto" />
+                                        <ChevronRight size={13} color="#9CA3AF" className="ml-auto" />
                                     </div>
                                 ))}
                             </div>

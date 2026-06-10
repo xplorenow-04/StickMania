@@ -7,7 +7,7 @@ import SkeletonCard from "../../components/user/SkeletonCard.jsx";
 import { productApi } from "../../api/product.api.js";
 import { categoryApi } from "../../api/category.api.js";
 import { useCategoryStore } from "../../store/categoryStore.js";
-import { SlidersHorizontal, ArrowUpDown, RefreshCw, ChevronLeft, ChevronRight } from "lucide-react";
+import { SlidersHorizontal, ArrowUpDown, RefreshCw, ChevronLeft, ChevronRight, SearchX } from "lucide-react";
 import toast from "react-hot-toast";
 
 export default function Shop() {
@@ -15,7 +15,6 @@ export default function Shop() {
   const [loading, setLoading] = useState(true);
   const [pagination, setPagination] = useState(null);
 
-  // Filters State
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("");
   const [sort, setSort] = useState("latest");
@@ -26,7 +25,6 @@ export default function Shop() {
 
   const { categories, setCategories } = useCategoryStore();
 
-  // Load Categories
   useEffect(() => {
     const fetchCategories = async () => {
       if (categories.length === 0) {
@@ -39,7 +37,6 @@ export default function Shop() {
     fetchCategories();
   }, [categories.length, setCategories]);
 
-  // Load Products (triggered by filters change)
   useEffect(() => {
     const fetchProducts = async () => {
       setLoading(true);
@@ -72,12 +69,11 @@ export default function Shop() {
 
     const timer = setTimeout(() => {
       fetchProducts();
-    }, 300); // Small debounce for search
+    }, 300);
 
     return () => clearTimeout(timer);
   }, [search, category, sort, featured, bestseller, trending, page]);
 
-  // Reset Filters
   const resetFilters = () => {
     setSearch("");
     setCategory("");
@@ -96,14 +92,14 @@ export default function Shop() {
   };
 
   return (
-    <div className="min-h-screen bg-dark-950 flex flex-col">
+    <div className="min-h-screen bg-white flex flex-col">
       <Navbar />
 
       <main className="flex-1 section-container py-10">
         {/* Header Title */}
         <div className="mb-8">
-          <h1 className="text-3xl font-black text-white font-display">Sticker Shop</h1>
-          <p className="text-sm text-gray-400 mt-1">Explore and filter our complete catalog of vinyl stickers.</p>
+          <h1 className="text-3xl font-black text-gray-900 tracking-tight" style={{ letterSpacing: "-0.02em" }}>Sticker Shop</h1>
+          <p className="text-sm text-gray-500 mt-1">Explore and filter our complete catalog of vinyl stickers.</p>
         </div>
 
         {/* Filters and Search Bar Section */}
@@ -117,16 +113,16 @@ export default function Shop() {
 
           <div className="flex flex-wrap items-center gap-3">
             {/* Category Filter */}
-            <div className="flex items-center gap-2 glass border border-white/5 px-3 py-1.5 rounded-xl">
-              <SlidersHorizontal size={14} className="text-purple-400" />
+            <div className="flex items-center gap-2 bg-white border border-gray-200 px-3 py-1.5 rounded-lg shadow-sm">
+              <SlidersHorizontal size={14} className="text-brand-500" />
               <select
                 value={category}
                 onChange={(e) => { setCategory(e.target.value); setPage(1); }}
-                className="bg-transparent text-xs font-semibold text-gray-300 outline-none border-none cursor-pointer pr-4"
+                className="bg-white text-xs font-semibold text-gray-700 outline-none border-none cursor-pointer pr-4"
               >
-                <option value="" className="bg-dark-900 text-gray-300">All Categories</option>
+                <option value="" className="bg-white text-gray-700">All Categories</option>
                 {categories.map((cat) => (
-                  <option key={cat._id} value={cat.slug} className="bg-dark-900 text-gray-300">
+                  <option key={cat._id} value={cat.slug} className="bg-white text-gray-700">
                     {cat.name}
                   </option>
                 ))}
@@ -134,24 +130,24 @@ export default function Shop() {
             </div>
 
             {/* Sort Select */}
-            <div className="flex items-center gap-2 glass border border-white/5 px-3 py-1.5 rounded-xl">
-              <ArrowUpDown size={14} className="text-purple-400" />
+            <div className="flex items-center gap-2 bg-white border border-gray-200 px-3 py-1.5 rounded-lg shadow-sm">
+              <ArrowUpDown size={14} className="text-brand-500" />
               <select
                 value={sort}
                 onChange={(e) => { setSort(e.target.value); setPage(1); }}
-                className="bg-transparent text-xs font-semibold text-gray-300 outline-none border-none cursor-pointer pr-4"
+                className="bg-white text-xs font-semibold text-gray-700 outline-none border-none cursor-pointer pr-4"
               >
-                <option value="latest" className="bg-dark-900 text-gray-300">Latest Arrivals</option>
-                <option value="price_asc" className="bg-dark-900 text-gray-300">Price: Low to High</option>
-                <option value="price_desc" className="bg-dark-900 text-gray-300">Price: High to Low</option>
-                <option value="popular" className="bg-dark-900 text-gray-300">Most Popular</option>
+                <option value="latest" className="bg-white text-gray-700">Latest Arrivals</option>
+                <option value="price_asc" className="bg-white text-gray-700">Price: Low to High</option>
+                <option value="price_desc" className="bg-white text-gray-700">Price: High to Low</option>
+                <option value="popular" className="bg-white text-gray-700">Most Popular</option>
               </select>
             </div>
 
             {/* Reset Button */}
             <button
               onClick={resetFilters}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-xl border border-white/10 hover:bg-white/5 text-xs font-bold text-gray-400 hover:text-white transition"
+              className="flex items-center gap-1.5 px-3 py-2 rounded-lg border border-gray-200 hover:bg-gray-50 text-xs font-bold text-gray-500 hover:text-gray-700 transition-all duration-150 shadow-sm"
               title="Reset Filters"
             >
               <RefreshCw size={12} />
@@ -161,35 +157,35 @@ export default function Shop() {
         </div>
 
         {/* Checkbox badges */}
-        <div className="flex flex-wrap gap-4 items-center mb-8 px-2 py-3 rounded-xl bg-white/3 border border-white/5">
-          <span className="text-[10px] uppercase font-bold tracking-wider text-gray-400 pr-2 border-r border-white/10">Filter By:</span>
+        <div className="flex flex-wrap gap-4 items-center mb-8 px-2 py-3 rounded-lg bg-gray-50 border border-gray-200">
+          <span className="text-[10px] uppercase font-bold tracking-wider text-gray-500 pr-2 border-r border-gray-200">Filter By:</span>
           
-          <label className="flex items-center gap-2 cursor-pointer text-xs font-semibold text-gray-300 select-none">
+          <label className="flex items-center gap-2 cursor-pointer text-xs font-semibold text-gray-700 select-none">
             <input
               type="checkbox"
               checked={featured}
               onChange={(e) => { setFeatured(e.target.checked); setPage(1); }}
-              className="w-3.5 h-3.5 rounded bg-dark-900 border-white/10 text-purple-600 focus:ring-purple-500"
+              className="w-3.5 h-3.5 rounded bg-white border-gray-300 text-brand-600 focus:ring-brand-500"
             />
             Featured
           </label>
 
-          <label className="flex items-center gap-2 cursor-pointer text-xs font-semibold text-gray-300 select-none">
+          <label className="flex items-center gap-2 cursor-pointer text-xs font-semibold text-gray-700 select-none">
             <input
               type="checkbox"
               checked={bestseller}
               onChange={(e) => { setBestseller(e.target.checked); setPage(1); }}
-              className="w-3.5 h-3.5 rounded bg-dark-900 border-white/10 text-purple-600 focus:ring-purple-500"
+              className="w-3.5 h-3.5 rounded bg-white border-gray-300 text-brand-600 focus:ring-brand-500"
             />
             Bestseller
           </label>
 
-          <label className="flex items-center gap-2 cursor-pointer text-xs font-semibold text-gray-300 select-none">
+          <label className="flex items-center gap-2 cursor-pointer text-xs font-semibold text-gray-700 select-none">
             <input
               type="checkbox"
               checked={trending}
               onChange={(e) => { setTrending(e.target.checked); setPage(1); }}
-              className="w-3.5 h-3.5 rounded bg-dark-900 border-white/10 text-purple-600 focus:ring-purple-500"
+              className="w-3.5 h-3.5 rounded bg-white border-gray-300 text-brand-600 focus:ring-brand-500"
             />
             Trending
           </label>
@@ -203,11 +199,12 @@ export default function Shop() {
             ))}
           </div>
         ) : products.length === 0 ? (
-          <div className="text-center py-24 glass border border-white/5 rounded-3xl">
-            <p className="text-gray-400 font-medium">No stickers matched your filters.</p>
+          <div className="text-center py-24 bg-white border border-gray-200 rounded-2xl shadow-sm">
+            <SearchX size={48} className="mx-auto text-gray-300 mb-4" />
+            <p className="text-gray-500 font-medium">No stickers matched your filters.</p>
             <button
               onClick={resetFilters}
-              className="btn-brand mt-4 text-xs font-bold px-5 py-2 rounded-xl"
+              className="btn-brand mt-4 text-xs font-bold px-5 py-2 rounded-lg"
             >
               Clear All Filters
             </button>
@@ -226,17 +223,17 @@ export default function Shop() {
                 <button
                   onClick={() => handlePageChange(page - 1)}
                   disabled={!pagination.hasPrevPage}
-                  className="p-2.5 rounded-xl border border-white/10 hover:bg-white/5 text-gray-300 disabled:opacity-40 disabled:cursor-not-allowed transition"
+                  className="p-2.5 rounded-lg border border-gray-200 hover:bg-gray-50 text-gray-600 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-150 shadow-sm"
                 >
                   <ChevronLeft size={16} />
                 </button>
-                <span className="text-xs font-semibold text-gray-400">
-                  Page <span className="text-white">{pagination.page}</span> of {pagination.totalPages}
+                <span className="text-xs font-semibold text-gray-500">
+                  Page <span className="text-gray-900">{pagination.page}</span> of {pagination.totalPages}
                 </span>
                 <button
                   onClick={() => handlePageChange(page + 1)}
                   disabled={!pagination.hasNextPage}
-                  className="p-2.5 rounded-xl border border-white/10 hover:bg-white/5 text-gray-300 disabled:opacity-40 disabled:cursor-not-allowed transition"
+                  className="p-2.5 rounded-lg border border-gray-200 hover:bg-gray-50 text-gray-600 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-150 shadow-sm"
                 >
                   <ChevronRight size={16} />
                 </button>

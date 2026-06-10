@@ -13,28 +13,27 @@ createRoot(document.getElementById("root")).render(
         <App />
         <Toaster
           position="top-right"
+          duration={3500}
           toastOptions={{
-            duration: 3500,
             style: {
-              background: "rgba(15, 15, 34, 0.95)",
-              color: "#f8f9ff",
-              border: "1px solid rgba(124, 58, 237, 0.2)",
+              background: "#FFFFFF",
+              color: "#0A0A0A",
+              border: "1px solid #E5E7EB",
               borderRadius: "0.75rem",
-              backdropFilter: "blur(20px)",
-              boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
+              boxShadow: "0 4px 16px rgba(0,0,0,0.10)",
               fontSize: "0.875rem",
               fontFamily: "Inter, sans-serif",
             },
             success: {
               iconTheme: {
-                primary: "#22d3a0",
-                secondary: "#0a0a1a",
+                primary: "#16A34A",
+                secondary: "#FFFFFF",
               },
             },
             error: {
               iconTheme: {
-                primary: "#f87171",
-                secondary: "#0a0a1a",
+                primary: "#DC2626",
+                secondary: "#FFFFFF",
               },
             },
           }}

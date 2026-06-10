@@ -12,7 +12,7 @@ import { socketEvents } from '../../constants/socketEvents'
 function Profile({ setActivePanel = () => {} }) {
 
     const { user } = userAuthStore()
-    const [view, setView] = useState('main') // 'main' | 'edit' | 'settings'
+    const [view, setView] = useState('main')
 
     return (
         <>
@@ -40,38 +40,38 @@ function Profile({ setActivePanel = () => {} }) {
                     cursor: pointer;
                     font-size: 13.5px;
                     font-weight: 500;
-                    color: #c4c6d8;
+                    color: #374151;
                     transition: background 0.15s;
                 }
-                .action-row:hover { background: rgba(255,255,255,0.05); }
-                .action-row:active { background: rgba(99,102,241,0.1); }
+                .action-row:hover { background: #F3F4F6; }
+                .action-row:active { background: #E5E7EB; }
 
                 .panel-divider {
                     height: 1px;
-                    background: rgba(255,255,255,0.06);
+                    background: #E5E7EB;
                     margin: 0 0px;
                 }
 
                 .profile-input {
                     width: 100%;
-                    background: #1a1d28;
-                    border: 1px solid rgba(255,255,255,0.06);
+                    background: #FFFFFF;
+                    border: 1.5px solid #D1D5DB;
                     border-radius: 10px;
                     padding: 10px 12px;
-                    color: #f1f2f7;
+                    color: #0A0A0A;
                     font-size: 13px;
                     outline: none;
                     transition: border-color 0.2s, box-shadow 0.2s;
-                    font-family: 'Sora', sans-serif;
+                    font-family: 'Inter', sans-serif;
                 }
                 .profile-input:focus {
-                    border-color: rgba(99,102,241,0.45);
-                    box-shadow: 0 0 0 3px rgba(99,102,241,0.12);
+                    border-color: #2563EB;
+                    box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
                 }
-                .profile-input::placeholder { color: #4a4e6a; }
+                .profile-input::placeholder { color: #9CA3AF; }
 
                 .save-btn:hover {
-                    box-shadow: 0 4px 16px rgba(99,102,241,0.45) !important;
+                    box-shadow: 0 4px 16px rgba(37,99,235,0.45) !important;
                     transform: translateY(-1px);
                 }
                 .save-btn:active { transform: scale(0.97); }
@@ -91,7 +91,7 @@ function Profile({ setActivePanel = () => {} }) {
                     border-radius: 50%;
                     background: #fff;
                     transition: transform 0.2s;
-                    box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+                    box-shadow: 0 1px 4px rgba(0,0,0,0.15);
                 }
                 .toggle-thumb.on { transform: translateX(16px); }
 
@@ -102,20 +102,20 @@ function Profile({ setActivePanel = () => {} }) {
                     padding: 11px 12px;
                     border-radius: 10px;
                     font-size: 13px;
-                    color: #c4c6d8;
+                    color: #374151;
                 }
                 .settings-section-label {
                     font-size: 10px;
                     font-weight: 600;
                     letter-spacing: 1px;
                     text-transform: uppercase;
-                    color: #4a4e6a;
+                    color: #6B7280;
                     padding: 0 12px 6px;
                     margin-top: 8px;
                 }
             `}</style>
 
-            <div className="profile-slide flex flex-col h-[100dvh]">
+            <div className="profile-slide flex flex-col h-[100dvh] bg-white">
                 {view === 'main' && <MainView user={user} setActivePanel={setActivePanel} setView={setView} />}
                 {view === 'edit' && <EditProfileView user={user} setView={setView} />}
                 {view === 'settings' && <AccountSettingsView user={user} setView={setView} />}
@@ -128,9 +128,6 @@ function Profile({ setActivePanel = () => {} }) {
 function MainView({ user, setActivePanel, setView }) {
 
     const { logout } = userAuthStore()
-
-    const [loading, setLoading] = useState(false)
-    const [file, setFile] = useState(null)
 
     const navigate = useNavigate()
 
@@ -151,8 +148,8 @@ function MainView({ user, setActivePanel, setView }) {
         <div className="flex flex-col h-full">
             {/* Header */}
             <div className="flex items-center justify-between px-5 pt-6 pb-4">
-                <span className="text-[15px] font-bold tracking-tight text-[#f1f2f7]">My Profile</span>
-                <button onClick={() => setActivePanel(null)} className="w-7 h-7 flex items-center justify-center rounded-lg text-[#4a4e6a] hover:text-[#818cf8] hover:bg-white/[0.05] transition-all">
+                <span className="text-[15px] font-bold tracking-tight text-gray-900">My Profile</span>
+                <button onClick={() => setActivePanel(null)} className="w-7 h-7 flex items-center justify-center rounded-lg text-gray-400 hover:text-brand-600 hover:bg-gray-100 transition-all duration-150">
                     <X size={15} />
                 </button>
             </div>
@@ -165,19 +162,18 @@ function MainView({ user, setActivePanel, setView }) {
                         src={user?.avtar || user?.avatar}
                         alt={user?.username}
                         className="w-20 h-20 rounded-full object-cover border-[3px]"
-                        style={{ borderColor: 'rgba(99,102,241,0.5)', boxShadow: '0 0 24px rgba(99,102,241,0.25)' }}
+                        style={{ borderColor: '#93C5FD', boxShadow: '0 0 24px rgba(37,99,235,0.15)' }}
                     />
-                    <div className="absolute bottom-0.5 right-0.5 w-4 h-4 rounded-full bg-[#22d3a0] border-2 border-[#0e1018]" />
+                    <div className="absolute bottom-0.5 right-0.5 w-4 h-4 rounded-full bg-success border-2 border-white" />
                 </div>
                 <div className="text-center">
-                    <p className="text-[16px] font-bold text-[#f1f2f7] tracking-tight">{user?.username}</p>
-                    <p className="text-[12px] text-[#4a4e6a] mt-0.5">{user?.email}</p>
+                    <p className="text-[16px] font-bold text-gray-900 tracking-tight">{user?.username}</p>
+                    <p className="text-[12px] text-gray-500 mt-0.5">{user?.email}</p>
                 </div>
                 {/* Active badge */}
-                <div className="w-full p-2.5 rounded-[10px] flex items-center gap-2"
-                    style={{ background: 'rgba(34,211,160,0.08)', border: '1px solid rgba(34,211,160,0.2)' }}>
-                    <div className="w-2 h-2 rounded-full bg-[#22d3a0]" />
-                    <span className="text-[12px] text-[#22d3a0] font-medium">Active now</span>
+                <div className="w-full p-2.5 rounded-[10px] flex items-center gap-2 bg-green-50 border border-green-200">
+                    <div className="w-2 h-2 rounded-full bg-success" />
+                    <span className="text-[12px] text-success font-medium">Active now</span>
                 </div>
             </div>
             <div className="panel-divider" />
@@ -185,31 +181,21 @@ function MainView({ user, setActivePanel, setView }) {
             {/* Actions */}
             <div className="px-3 pt-2 flex flex-col gap-0.5 flex-1">
                 <div className="action-row" onClick={() => setView('edit')}>
-                    <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0"
-                        style={{ background: 'rgba(99,102,241,0.15)' }}>
-                        <User size={13} color="#818cf8" />
+                    <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 bg-brand-100">
+                        <User size={13} color="#2563EB" />
                     </div>
                     <span>Edit Profile</span>
-                    <ChevronRight size={13} color="#4a4e6a" className="ml-auto" />
+                    <ChevronRight size={13} color="#9CA3AF" className="ml-auto" />
                 </div>
-                {/* <div className="action-row" onClick={() => setView('settings')}>
-                    <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0"
-                        style={{ background: 'rgba(99,102,241,0.15)' }}>
-                        <Settings size={13} color="#818cf8" />
-                    </div>
-                    <span>Account Settings</span>
-                    <ChevronRight size={13} color="#4a4e6a" className="ml-auto" />
-                </div> */}
 
                 {/* Sign out pushed to bottom */}
                 <div
                 onClick={handleSignOut}
                 className="mt-auto pt-4 pb-3">
                     <div className="panel-divider mb-3" />
-                    <div className="action-row" style={{ color: '#f87171' }}>
-                        <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0"
-                            style={{ background: 'rgba(248,113,113,0.1)' }}>
-                            <LogOut size={13} color="#f87171" />
+                    <div className="action-row" style={{ color: '#DC2626' }}>
+                        <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 bg-red-50">
+                            <LogOut size={13} color="#DC2626" />
                         </div>
                         <span>Sign Out</span>
                     </div>
@@ -259,10 +245,10 @@ function EditProfileView({ user, setView }) {
             {/* Header */}
             <div className="flex items-center gap-3 px-5 pt-6 pb-4">
                 <button onClick={() => setView('main')}
-                    className="w-7 h-7 flex items-center justify-center rounded-lg text-[#4a4e6a] hover:text-[#818cf8] hover:bg-white/[0.05] transition-all">
+                    className="w-7 h-7 flex items-center justify-center rounded-lg text-gray-400 hover:text-brand-600 hover:bg-gray-100 transition-all duration-150">
                     <ChevronLeft size={16} />
                 </button>
-                <span className="text-[15px] font-bold tracking-tight text-[#f1f2f7]">Edit Profile</span>
+                <span className="text-[15px] font-bold tracking-tight text-gray-900">Edit Profile</span>
             </div>
             <div className="panel-divider" />
 
@@ -274,10 +260,9 @@ function EditProfileView({ user, setView }) {
                             src={ file && user?.avtar ? URL.createObjectURL(file) : !file && user?.avtar ? user.avtar : user?.avtar}
                             alt={user?.username}
                             className="w-20 h-20 rounded-full object-cover border-[3px] transition-opacity group-hover:opacity-70"
-                            style={{ borderColor: 'rgba(99,102,241,0.5)', boxShadow: '0 0 24px rgba(99,102,241,0.25)' }}
+                            style={{ borderColor: '#93C5FD', boxShadow: '0 0 24px rgba(37,99,235,0.15)' }}
                         />
-                        <div className="absolute inset-0 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                            style={{ background: 'rgba(0,0,0,0.5)' }}>
+                        <div className="absolute inset-0 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40">
                             <Camera size={18} color="#fff" />
                         </div>
                         <input
@@ -290,13 +275,13 @@ function EditProfileView({ user, setView }) {
                             className="hidden"
                              />
                     </div>
-                    <span className="text-[11px] text-[#4a4e6a]">Click to change photo</span>
+                    <span className="text-[11px] text-gray-400">Click to change photo</span>
                 </div>
 
                 {/* Fields */}
                 <div className="flex flex-col gap-3">
                     <div>
-                        <label className="text-[11px] font-semibold text-[#4a4e6a] uppercase tracking-[0.8px] mb-1.5 block">Display Name</label>
+                        <label className="text-[11px] font-semibold text-gray-500 uppercase tracking-[0.8px] mb-1.5 block">Display Name</label>
                         <input
                             className="profile-input"
                             value={name}
@@ -305,9 +290,9 @@ function EditProfileView({ user, setView }) {
                         />
                     </div>
                     <div>
-                        <label className="text-[11px] font-semibold text-[#4a4e6a] uppercase tracking-[0.8px] mb-1.5 block">Username</label>
+                        <label className="text-[11px] font-semibold text-gray-500 uppercase tracking-[0.8px] mb-1.5 block">Username</label>
                         <div className="relative">
-                            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#4a4e6a] text-sm">@</span>
+                            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">@</span>
                             <input
                                 className="profile-input pl-7"
                                 value={username}
@@ -317,7 +302,7 @@ function EditProfileView({ user, setView }) {
                         </div>
                     </div>
                     <div>
-                        <label className="text-[11px] font-semibold text-[#4a4e6a] uppercase tracking-[0.8px] mb-1.5 block">Bio</label>
+                        <label className="text-[11px] font-semibold text-gray-500 uppercase tracking-[0.8px] mb-1.5 block">Bio</label>
                         <textarea
                             className="profile-input resize-none"
                             rows={3}
@@ -328,13 +313,13 @@ function EditProfileView({ user, setView }) {
                         />
                     </div>
                     <div>
-                        <label className="text-[11px] font-semibold text-[#4a4e6a] uppercase tracking-[0.8px] mb-1.5 block">Email</label>
+                        <label className="text-[11px] font-semibold text-gray-500 uppercase tracking-[0.8px] mb-1.5 block">Email</label>
                         <input
                             className="profile-input opacity-50 cursor-not-allowed"
                             value={user?.email || ''}
                             readOnly
                         />
-                        <p className="text-[10.5px] text-[#4a4e6a] mt-1 ml-1">Email cannot be changed</p>
+                        <p className="text-[10.5px] text-gray-400 mt-1 ml-1">Email cannot be changed</p>
                     </div>
                 </div>
             </div>
@@ -345,7 +330,7 @@ function EditProfileView({ user, setView }) {
                 <button
                     onClick={handleSave}
                     className="save-btn w-full py-2.5 rounded-[11px] text-white text-sm font-semibold tracking-wide border-none cursor-pointer transition-all duration-200 flex items-center justify-center gap-2"
-                    style={{ background: saved ? 'linear-gradient(135deg,#22d3a0,#16a37f)' : 'linear-gradient(135deg,#6366f1,#8b5cf6)', boxShadow: '0 4px 14px rgba(99,102,241,0.35)' }}
+                    style={{ background: saved ? '#16A34A' : '#2563EB', boxShadow: '0 4px 14px rgba(37,99,235,0.35)' }}
                 >
                     {saved ? <><Check size={15} /> Saved!</> : 'Save Changes'}
                 </button>
@@ -364,7 +349,7 @@ function AccountSettingsView({ user, setView }) {
     const Toggle = ({ on, onToggle }) => (
         <div
             className="toggle-track"
-            style={{ background: on ? 'linear-gradient(135deg,#6366f1,#8b5cf6)' : 'rgba(255,255,255,0.1)' }}
+            style={{ background: on ? '#2563EB' : '#E5E7EB' }}
             onClick={onToggle}
         >
             <div className={`toggle-thumb ${on ? 'on' : ''}`} />
@@ -376,10 +361,10 @@ function AccountSettingsView({ user, setView }) {
             {/* Header */}
             <div className="flex items-center gap-3 px-5 pt-6 pb-4">
                 <button onClick={() => setView('main')}
-                    className="w-7 h-7 flex items-center justify-center rounded-lg text-[#4a4e6a] hover:text-[#818cf8] hover:bg-white/[0.05] transition-all">
+                    className="w-7 h-7 flex items-center justify-center rounded-lg text-gray-400 hover:text-brand-600 hover:bg-gray-100 transition-all duration-150">
                     <ChevronLeft size={16} />
                 </button>
-                <span className="text-[15px] font-bold tracking-tight text-[#f1f2f7]">Account Settings</span>
+                <span className="text-[15px] font-bold tracking-tight text-gray-900">Account Settings</span>
             </div>
             <div className="panel-divider" />
 
@@ -389,24 +374,24 @@ function AccountSettingsView({ user, setView }) {
                 <p className="settings-section-label">Notifications</p>
                 <div className="settings-row justify-between">
                     <div className="flex items-center gap-2.5">
-                        <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: 'rgba(99,102,241,0.15)' }}>
-                            <Bell size={13} color="#818cf8" />
+                        <div className="w-7 h-7 rounded-lg flex items-center justify-center bg-brand-100">
+                            <Bell size={13} color="#2563EB" />
                         </div>
                         <div>
-                            <p className="text-[13px] text-[#c4c6d8] font-medium">Push Notifications</p>
-                            <p className="text-[11px] text-[#4a4e6a]">New messages & activity</p>
+                            <p className="text-[13px] text-gray-700 font-medium">Push Notifications</p>
+                            <p className="text-[11px] text-gray-400">New messages & activity</p>
                         </div>
                     </div>
                     <Toggle on={notifications} onToggle={() => setNotifications(p => !p)} />
                 </div>
                 <div className="settings-row justify-between">
                     <div className="flex items-center gap-2.5">
-                        <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: 'rgba(99,102,241,0.15)' }}>
-                            <Palette size={13} color="#818cf8" />
+                        <div className="w-7 h-7 rounded-lg flex items-center justify-center bg-brand-100">
+                            <Palette size={13} color="#2563EB" />
                         </div>
                         <div>
-                            <p className="text-[13px] text-[#c4c6d8] font-medium">Message Sounds</p>
-                            <p className="text-[11px] text-[#4a4e6a]">Play sound on new message</p>
+                            <p className="text-[13px] text-gray-700 font-medium">Message Sounds</p>
+                            <p className="text-[11px] text-gray-400">Play sound on new message</p>
                         </div>
                     </div>
                     <Toggle on={sounds} onToggle={() => setSounds(p => !p)} />
@@ -416,39 +401,38 @@ function AccountSettingsView({ user, setView }) {
                 <p className="settings-section-label">Privacy</p>
                 <div className="settings-row justify-between">
                     <div className="flex items-center gap-2.5">
-                        <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: 'rgba(99,102,241,0.15)' }}>
-                            <Shield size={13} color="#818cf8" />
+                        <div className="w-7 h-7 rounded-lg flex items-center justify-center bg-brand-100">
+                            <Shield size={13} color="#2563EB" />
                         </div>
                         <div>
-                            <p className="text-[13px] text-[#c4c6d8] font-medium">Read Receipts</p>
-                            <p className="text-[11px] text-[#4a4e6a]">Show when you've read messages</p>
+                            <p className="text-[13px] text-gray-700 font-medium">Read Receipts</p>
+                            <p className="text-[11px] text-gray-400">Show when you've read messages</p>
                         </div>
                     </div>
                     <Toggle on={readReceipts} onToggle={() => setReadReceipts(p => !p)} />
                 </div>
                 <div className="settings-row justify-between">
                     <div className="flex items-center gap-2.5">
-                        <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: 'rgba(99,102,241,0.15)' }}>
-                            <Globe size={13} color="#818cf8" />
+                        <div className="w-7 h-7 rounded-lg flex items-center justify-center bg-brand-100">
+                            <Globe size={13} color="#2563EB" />
                         </div>
                         <div>
-                            <p className="text-[13px] text-[#c4c6d8] font-medium">Online Status</p>
-                            <p className="text-[11px] text-[#4a4e6a]">Show when you're active</p>
+                            <p className="text-[13px] text-gray-700 font-medium">Online Status</p>
+                            <p className="text-[11px] text-gray-400">Show when you're active</p>
                         </div>
                     </div>
                     <Toggle on={onlineVisible} onToggle={() => setOnlineVisible(p => !p)} />
                 </div>
 
                 {/* Danger zone */}
-                <p className="settings-section-label" style={{ color: '#f87171' }}>Danger Zone</p>
-                <div className="action-row mx-0" style={{ color: '#f87171' }}>
-                    <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0"
-                        style={{ background: 'rgba(248,113,113,0.1)' }}>
-                        <Trash2 size={13} color="#f87171" />
+                <p className="settings-section-label" style={{ color: '#DC2626' }}>Danger Zone</p>
+                <div className="action-row mx-0" style={{ color: '#DC2626' }}>
+                    <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 bg-red-50">
+                        <Trash2 size={13} color="#DC2626" />
                     </div>
                     <div>
                         <p className="text-[13px] font-medium">Delete Account</p>
-                        <p className="text-[11px] text-[#f87171]/60">This action is irreversible</p>
+                        <p className="text-[11px] text-red-400">This action is irreversible</p>
                     </div>
                 </div>
             </div>

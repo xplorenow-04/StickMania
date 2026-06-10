@@ -22,7 +22,6 @@ export default function CategoryPage() {
     const fetchCategoryProducts = async () => {
       setLoading(true);
       try {
-        // Find category name from store or fetch
         let currentCat = categories.find((c) => c.slug === slug);
         if (!currentCat) {
           const catRes = await categoryApi.getAll();
@@ -35,11 +34,9 @@ export default function CategoryPage() {
         if (currentCat) {
           setCategoryName(currentCat.name);
         } else {
-          // Fallback to formatting slug
           setCategoryName(slug.charAt(0).toUpperCase() + slug.slice(1).replace("-", " "));
         }
 
-        // Fetch products by category slug
         const res = await productApi.getAll({ category: slug });
         if (res.success && res.data) {
           setProducts(res.data.products || []);
@@ -57,25 +54,25 @@ export default function CategoryPage() {
   }, [slug, categories, setCategories]);
 
   return (
-    <div className="min-h-screen bg-dark-950 flex flex-col">
+    <div className="min-h-screen bg-white flex flex-col">
       <Navbar />
 
       <main className="flex-grow section-container py-10">
         {/* Back Link */}
-        <Link to="/shop" className="inline-flex items-center gap-2 text-xs font-semibold text-gray-400 hover:text-white mb-8 transition">
+        <Link to="/shop" className="inline-flex items-center gap-2 text-xs font-semibold text-gray-500 hover:text-gray-900 mb-8 transition-all duration-150">
           <ArrowLeft size={14} /> Back to Shop
         </Link>
 
         {/* Header Title */}
         <div className="mb-10">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20 text-xs font-semibold uppercase tracking-wider mb-3">
-            <Compass size={14} className="text-purple-400" />
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-50 text-brand-700 border border-brand-200 text-xs font-semibold uppercase tracking-wider mb-3">
+            <Compass size={14} className="text-brand-500" />
             Category Collection
           </div>
-          <h1 className="text-3xl font-black text-white font-display">
+          <h1 className="text-3xl font-black text-gray-900 tracking-tight" style={{ letterSpacing: "-0.02em" }}>
             {categoryName} Stickers
           </h1>
-          <p className="text-sm text-gray-400 mt-1">
+          <p className="text-sm text-gray-500 mt-1">
             Browse all stickers inside the "{categoryName}" collection.
           </p>
         </div>
@@ -88,9 +85,9 @@ export default function CategoryPage() {
             ))}
           </div>
         ) : products.length === 0 ? (
-          <div className="text-center py-20 glass border border-white/5 rounded-3xl">
-            <p className="text-gray-400 text-sm mb-4">No stickers in this category yet.</p>
-            <Link to="/shop" className="btn-ghost text-xs font-semibold">
+          <div className="text-center py-20 bg-white border border-gray-200 rounded-2xl shadow-sm">
+            <p className="text-gray-500 text-sm mb-4">No stickers in this category yet.</p>
+            <Link to="/shop" className="btn-secondary text-xs font-semibold">
               Browse Other Stickers
             </Link>
           </div>

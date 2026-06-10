@@ -12,10 +12,10 @@ const AdminDashboard = lazy(() => import("./pages/user/AdminDashboard.jsx"));
 const Login = lazy(() => import("./pages/auth/Login.jsx"));
 
 const PageLoader = () => (
-  <div className="min-h-screen bg-dark-900 flex items-center justify-center">
+  <div className="min-h-screen bg-white flex items-center justify-center">
     <div className="flex flex-col items-center gap-4">
-      <div className="w-10 h-10 border-2 border-brand-700 border-t-brand-400 rounded-full animate-spin" />
-      <p className="text-text-muted text-sm">Loading...</p>
+      <div className="w-10 h-10 border-2 border-brand-600 border-t-brand-300 rounded-full animate-spin" />
+      <p className="text-gray-400 text-sm">Loading...</p>
     </div>
   </div>
 );
