@@ -148,3 +148,4 @@ Deploy the `client` directory to **Vercel**.
 - The `client/vercel.json` ensures that single-page client side routes `/shop`, `/admin`, and `/category/:slug` redirect to index.html properly.
 - Update `VITE_BACKEND_URL_PROD` to reference the deployed backend API URL.
 # StickMania
+# StickMania
