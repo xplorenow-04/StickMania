@@ -14,7 +14,7 @@ const httpServer = createServer(app);
 // 1. CORS (registered first so preflight and errors get CORS headers)
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "https://stick-mania-3s48.vercel.app",
+    origin: [process.env.CLIENT_URL, "https://stick-mania-3s48.vercel.app", "http://localhost:5173"],
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     credentials: true,
   })
@@ -55,7 +55,7 @@ const limiter = rateLimit({
   legacyHeaders: false,
   message: { success: false, message: "Too many requests, please try again later." },
 });
-app.use("/api/", limiter);
+// app.use("/api/", limiter);
 
 
 // Routes
