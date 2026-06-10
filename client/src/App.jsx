@@ -4,8 +4,7 @@ import { authContext } from "./context/AuthProvider.jsx";
 import { userApi } from "./api/user.api.js";
 import ProtectedRoute from "./components/guards/ProtectedRoute.jsx";
 import ProtectedRouteAuth from "./components/guards/ProtectedRouteAuth.jsx";
-
-const Home = lazy(() => import("./pages/user/Home.jsx"));
+import Home from "./pages/user/Home.jsx";
 const Shop = lazy(() => import("./pages/user/Shop.jsx"));
 const ProductDetail = lazy(() => import("./pages/user/ProductDetail.jsx"));
 const CategoryPage = lazy(() => import("./pages/user/CategoryPage.jsx"));

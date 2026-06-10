@@ -4,17 +4,14 @@ import Footer from "../../components/user/Footer.jsx";
 import HeroSection from "../../components/user/HeroSection.jsx";
 import CategoryCard from "../../components/user/CategoryCard.jsx";
 import StickerCard from "../../components/user/StickerCard.jsx";
-import SkeletonCard from "../../components/user/SkeletonCard.jsx";
 import { categoryApi } from "../../api/category.api.js";
 import { productApi } from "../../api/product.api.js";
 import { useCategoryStore } from "../../store/categoryStore.js";
-import { useProductStore } from "../../store/productStore.js";
 import { Sparkles, Compass, Flame } from "lucide-react";
 import toast from "react-hot-toast";
 
 export default function Home() {
   const [loadingCats, setLoadingCats] = useState(true);
-  const [loadingProducts, setLoadingProducts] = useState(true);
   
   const { categories, setCategories } = useCategoryStore();
   const [trendingProducts, setTrendingProducts] = useState([]);
@@ -23,7 +20,6 @@ export default function Home() {
   useEffect(() => {
     const fetchHomeData = async () => {
       try {
-        // Fetch Categories
         const catRes = await categoryApi.getAll();
         if (catRes.success && catRes.data) {
           setCategories(catRes.data);
@@ -32,7 +28,6 @@ export default function Home() {
         }
         setLoadingCats(false);
 
-        // Fetch Trending & Featured Products in parallel
         const [trendingRes, featuredRes] = await Promise.all([
           productApi.getAll({ trending: "true", limit: 4 }),
           productApi.getAll({ featured: "true", limit: 4 })
@@ -44,11 +39,9 @@ export default function Home() {
         if (featuredRes.success && featuredRes.data) {
           setFeaturedProducts(featuredRes.data.products || []);
         }
-        setLoadingProducts(false);
       } catch (error) {
         console.error("Error loading home page data:", error);
         setLoadingCats(false);
-        setLoadingProducts(false);
       }
     };
 
@@ -111,13 +104,7 @@ export default function Home() {
             </div>
           </div>
 
-          {loadingProducts ? (
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {[...Array(4)].map((_, i) => (
-                <SkeletonCard key={i} />
-              ))}
-            </div>
-          ) : trendingProducts.length === 0 ? (
+          {trendingProducts.length === 0 ? (
             <div className="text-center py-12 text-gray-500">
               No trending stickers at the moment.
             </div>
@@ -145,13 +132,7 @@ export default function Home() {
           </div>
         </div>
 
-        {loadingProducts ? (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {[...Array(4)].map((_, i) => (
-              <SkeletonCard key={i} />
-            ))}
-          </div>
-        ) : featuredProducts.length === 0 ? (
+        {featuredProducts.length === 0 ? (
           <div className="text-center py-12 text-gray-500">
             No featured stickers available.
           </div>
