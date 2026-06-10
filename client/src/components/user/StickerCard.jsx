@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { MessageSquare, Star } from "lucide-react";
 
-const WHATSAPP_NO = import.meta.env.WHATSAPP_NO // Hardcoded config matching backend configuration
+const WHATSAPP_NO = import.meta.env.WHATSAPP_NO || "8806720312" // Hardcoded config matching backend configuration
 
 export default function StickerCard({ product }) {
   const { name, slug, price, discount, images, category, featured, bestseller, trending } = product;
