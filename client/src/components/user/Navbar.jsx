@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { authContext } from "../../context/AuthProvider.jsx";
 import { userApi } from "../../api/user.api.js";
+import { FaInstagram } from "react-icons/fa";
 import { Menu, X, LogOut, LayoutDashboard, ShoppingBag, Home } from "lucide-react";
 import toast from "react-hot-toast";
 
@@ -54,6 +55,15 @@ export default function Navbar() {
                 {link.name}
               </NavLink>
             ))}
+            <a
+              href="https://www.instagram.com/_stickomania?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-pink-400 transition-colors"
+              aria-label="Instagram"
+            >
+              <FaInstagram size={22} />
+            </a>
           </div>
 
           {/* User / Admin CTA */}
@@ -93,7 +103,16 @@ export default function Navbar() {
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center">
+          <div className="md:hidden flex items-center gap-2">
+            <a
+              href="https://www.instagram.com/_stickomania?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-pink-400 transition-colors"
+              aria-label="Instagram"
+            >
+              <FaInstagram size={22} />
+            </a>
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-white/5 focus:outline-none"
@@ -127,6 +146,16 @@ export default function Navbar() {
               </NavLink>
             );
           })}
+          <a
+            href="https://www.instagram.com/_stickomania?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setIsOpen(false)}
+            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-base font-medium text-gray-300 hover:bg-white/5 hover:text-pink-400 transition-colors"
+          >
+            <FaInstagram size={18} />
+            Instagram
+          </a>
 
           <div className="pt-4 mt-4 border-t border-white/10 flex flex-col gap-3 px-3">
             {isLoggedIn ? (

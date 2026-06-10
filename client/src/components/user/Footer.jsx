@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Heart } from "lucide-react";
+import { FaInstagram } from "react-icons/fa";
 
 export default function Footer() {
   return (
@@ -18,7 +19,7 @@ export default function Footer() {
           </div>
 
           {/* Quick links */}
-          <div className="flex gap-6 text-sm text-gray-400">
+          <div className="flex gap-6 text-sm text-gray-400 items-center">
             <Link to="/" className="hover:text-purple-400 transition-colors">
               Home
             </Link>
@@ -28,6 +29,15 @@ export default function Footer() {
             <Link to="/login" className="hover:text-purple-400 transition-colors">
               Admin Area
             </Link>
+            <a
+              href="https://www.instagram.com/_stickomania?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-pink-400 transition-colors"
+              aria-label="Instagram"
+            >
+              <FaInstagram size={20} />
+            </a>
           </div>
         </div>
 
