@@ -16,6 +16,7 @@ router.get("/", getAllCategories);
 
 // Admin routes
 router.post("/", userAuth, adminPermission, upload.single("image"), createCategory);
+router.post("/ping",(req,re));
 router.put("/:id", userAuth, adminPermission, upload.single("image"), updateCategory);
 router.delete("/:id", userAuth, adminPermission, deleteCategory);
 

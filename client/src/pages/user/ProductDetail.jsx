@@ -8,7 +8,7 @@ import { productApi } from "../../api/product.api.js";
 import { MessageSquare, ArrowLeft, Heart, Tag, Sparkles } from "lucide-react";
 import toast from "react-hot-toast";
 
-const WHATSAPP_NO = "9172346386"; // Hardcoded matching seed config
+const WHATSAPP_NO = import.meta.env.WHATSAPP_NO // Hardcoded matching seed config
 
 export default function ProductDetail() {
   const { slug } = useParams();
