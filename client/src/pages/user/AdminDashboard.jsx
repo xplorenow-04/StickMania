@@ -13,11 +13,11 @@ import toast from "react-hot-toast";
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState("products");
-  
+
   // Modals state
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const [productToEdit, setProductToEdit] = useState(null);
-  
+
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
   const [categoryToEdit, setCategoryToEdit] = useState(null);
 
@@ -195,21 +195,19 @@ export default function AdminDashboard() {
         <div className="flex border-b border-white/5 gap-6 mb-6">
           <button
             onClick={() => setActiveTab("products")}
-            className={`pb-3 text-sm font-semibold tracking-wide border-b-2 transition-all ${
-              activeTab === "products"
+            className={`pb-3 text-sm font-semibold tracking-wide border-b-2 transition-all ${activeTab === "products"
                 ? "text-purple-400 border-purple-500"
                 : "text-gray-400 border-transparent hover:text-white"
-            }`}
+              }`}
           >
             Stickers ({products.length})
           </button>
           <button
             onClick={() => setActiveTab("categories")}
-            className={`pb-3 text-sm font-semibold tracking-wide border-b-2 transition-all ${
-              activeTab === "categories"
+            className={`pb-3 text-sm font-semibold tracking-wide border-b-2 transition-all ${activeTab === "categories"
                 ? "text-purple-400 border-purple-500"
                 : "text-gray-400 border-transparent hover:text-white"
-            }`}
+              }`}
           >
             Categories ({categories.length})
           </button>

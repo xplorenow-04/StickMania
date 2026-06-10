@@ -115,7 +115,7 @@ export default function ProductDetail() {
 
         {/* Product Details Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16 items-start">
-          
+
           {/* Images Gallery */}
           <div className="space-y-4">
             {/* Active image box */}
@@ -134,9 +134,8 @@ export default function ProductDetail() {
                   <button
                     key={index}
                     onClick={() => setActiveImage(img.url)}
-                    className={`relative w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 border bg-dark-900/40 p-1.5 transition ${
-                      activeImage === img.url ? "border-purple-500 ring-2 ring-purple-500/20" : "border-white/10 hover:border-white/20"
-                    }`}
+                    className={`relative w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 border bg-dark-900/40 p-1.5 transition ${activeImage === img.url ? "border-purple-500 ring-2 ring-purple-500/20" : "border-white/10 hover:border-white/20"
+                      }`}
                   >
                     <img src={img.url} alt={`Thumbnail ${index}`} className="w-full h-full object-contain" />
                   </button>
@@ -147,7 +146,7 @@ export default function ProductDetail() {
 
           {/* Details Content */}
           <div className="space-y-6">
-            
+
             {/* Badges & Category */}
             <div className="flex flex-wrap items-center gap-2">
               <span className="text-xs font-semibold text-purple-400 uppercase tracking-widest bg-purple-500/10 border border-purple-500/20 px-2.5 py-1 rounded-lg">
@@ -241,7 +240,7 @@ export default function ProductDetail() {
         {/* Related Products Section */}
         <div className="mt-24 border-t border-white/5 pt-16">
           <h2 className="text-2xl font-black text-white font-display mb-8">Related Stickers</h2>
-          
+
           {loadingRelated ? (
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {[...Array(4)].map((_, i) => (

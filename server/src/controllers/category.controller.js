@@ -35,6 +35,7 @@ const createCategory = asyncHandler(async (req, res) => {
   }
 
   let image = { url: "", publicId: "" };
+  console.log("Path : ", req.file)
   if (req.file) {
     const uploaded = await uploadFileOnCloudinary(req.file.path, "image");
     if (uploaded && uploaded.success) {
