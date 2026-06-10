@@ -9,7 +9,7 @@ export default function StickerCard({ product }) {
 
   // Calculate final discounted price
   const finalPrice = discount > 0 ? (price - (price * discount) / 100).toFixed(2) : price.toFixed(2);
-  const mainImage = images && images.length > 0 ? images[0] : "https://via.placeholder.com/300?text=StickMania";
+  const mainImage = images && images.length > 0 ? images[0].url : "https://via.placeholder.com/300?text=StickMania";
 
   // Construct WhatsApp order text
   const currentUrl = window.location.origin + `/shop/${slug}`;
