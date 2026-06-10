@@ -35,35 +35,35 @@ function App() {
     checkAuth();
   }, []);
 
-  if (!authChecked) {
-    return <PageLoader />;
-  }
+  // if (!authChecked) {
+  //   return <PageLoader />;
+  // }
 
   return (
-    <Suspense fallback={<PageLoader />}>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/shop" element={<Shop />} />
-        <Route path="/shop/:slug" element={<ProductDetail />} />
-        <Route path="/category/:slug" element={<CategoryPage />} />
-        <Route
-          path="/login"
-          element={
-            <ProtectedRouteAuth>
-              <Login />
-            </ProtectedRouteAuth>
-          }
-        />
-        <Route
-          path="/admin"
-          element={
-            <ProtectedRoute>
-              <AdminDashboard />
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
-    </Suspense>
+    // <Suspense fallback={<PageLoader />}>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/shop" element={<Shop />} />
+      <Route path="/shop/:slug" element={<ProductDetail />} />
+      <Route path="/category/:slug" element={<CategoryPage />} />
+      <Route
+        path="/login"
+        element={
+          <ProtectedRouteAuth>
+            <Login />
+          </ProtectedRouteAuth>
+        }
+      />
+      <Route
+        path="/admin"
+        element={
+          <ProtectedRoute>
+            <AdminDashboard />
+          </ProtectedRoute>
+        }
+      />
+    </Routes>
+    // </Suspense>
   );
 }
 
